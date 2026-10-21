@@ -5,10 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
+import com.firstaid.awareness.ui.emergency.EmergencyScreen
 import com.firstaid.awareness.ui.icons.arrow_back
 import com.firstaid.awareness.ui.icons.educate_icon
 import com.firstaid.awareness.ui.icons.emergency_icon
@@ -54,17 +52,49 @@ class MainActivity : ComponentActivity() {
         AppTheme {
             val scrollBehavior =
                 TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+            var selectedItem by remember { mutableIntStateOf(0) }
+
+            val items = listOf(
+                BottomNavItem("Learn", educate_icon),
+                BottomNavItem("Emergency", emergency_icon)
+            )
+
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
                     Toolbar(scrollBehavior)
                 },
                 bottomBar = {
-                    BottomAppBar()
+                    NavigationBar {
+                        items.forEachIndexed { index, item ->
+                            NavigationBarItem(
+                                selected = selectedItem == index,
+                                onClick = {
+                                    selectedItem = index
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = item.icon,
+                                        contentDescription = item.title
+                                    )
+                                },
+                                label = {
+                                    Text(item.title)
+                                }
+                            )
+                        }
+                    }
                 },
             ) { innerPadding ->
-                Row(modifier = Modifier.padding((innerPadding))) {
-
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                ) {
+                    when (selectedItem) {
+                        0 -> Home()
+                        1 -> EmergencyScreen()
+                    }
                 }
             }
         }
@@ -72,59 +102,18 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Home() {
-
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Learn & First Aid Home")
+        }
     }
-
 
     data class BottomNavItem(
         val title: String,
         val icon: ImageVector
     )
-
-    @Composable
-    fun BottomAppBar() {
-        val items = listOf(
-            BottomNavItem("Learn", educate_icon),
-            BottomNavItem("Emergency", emergency_icon)
-        )
-
-        var selectedItem by remember { mutableIntStateOf(0) }
-
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                when (selectedItem) {
-                    0 -> Home()
-                }
-            }
-
-            NavigationBar {
-                items.forEachIndexed { index, item ->
-                    NavigationBarItem(
-                        selected = selectedItem == index,
-                        onClick = {
-                            selectedItem = index
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = item.icon,
-                                contentDescription = item.title
-                            )
-                        },
-                        label = {
-                            Text(item.title)
-                        }
-                    )
-                }
-            }
-        }
-    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -139,7 +128,7 @@ class MainActivity : ComponentActivity() {
                 }) {
                     Icon(
                         imageVector = arrow_back,
-                        contentDescription = ""
+                        contentDescription = "Back"
                     )
                 }
             },
