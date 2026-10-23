@@ -23,7 +23,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -32,6 +31,7 @@ import com.firstaid.awareness.ui.emergency.EmergencyScreen
 import com.firstaid.awareness.ui.icons.arrow_back
 import com.firstaid.awareness.ui.icons.educate_icon
 import com.firstaid.awareness.ui.icons.emergency_icon
+import com.firstaid.awareness.ui.learn.LearnScreen
 import com.firstaid.awareness.ui.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -92,21 +92,11 @@ class MainActivity : ComponentActivity() {
                         .padding(innerPadding)
                 ) {
                     when (selectedItem) {
-                        0 -> Home()
+                        0 -> LearnScreen()
                         1 -> EmergencyScreen()
                     }
                 }
             }
-        }
-    }
-
-    @Composable
-    fun Home() {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Learn & First Aid Home")
         }
     }
 
