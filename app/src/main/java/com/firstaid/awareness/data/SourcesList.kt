@@ -1,4 +1,4 @@
-package com.firstaid.awareness.ui.sources
+package com.firstaid.awareness.data
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.firstaid.awareness.ui.sources.DataSourceCard
+import com.firstaid.awareness.ui.sources.DataSourceItem
 
 @Composable
 fun SourcesList() {
