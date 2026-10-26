@@ -42,6 +42,8 @@ import com.firstaid.awareness.ui.emergency.EmergencyScreen
 import com.firstaid.awareness.ui.icons.arrow_back
 import com.firstaid.awareness.ui.icons.educate_icon
 import com.firstaid.awareness.ui.icons.emergency_icon
+import com.firstaid.awareness.ui.icons.problem
+import com.firstaid.awareness.ui.icons.question_mark
 import com.firstaid.awareness.ui.icons.quiz_icon
 import com.firstaid.awareness.ui.icons.sources_icon
 import com.firstaid.awareness.ui.learn.LearnScreen
@@ -76,9 +78,9 @@ class MainActivity : ComponentActivity() {
 
             val items = listOf(
                 BottomNavItem("Learn", educate_icon),
-                BottomNavItem("Problem", quiz_icon),
+                BottomNavItem("Problem", problem),
+                BottomNavItem("Quiz", question_mark),
                 BottomNavItem("Sources", sources_icon),
-                BottomNavItem("Quiz", quiz_icon),
                 BottomNavItem("Emergency", emergency_icon)
             )
 
@@ -129,8 +131,8 @@ class MainActivity : ComponentActivity() {
                     when (selectedItem) {
                         0 -> LearnScreen()
                         1 -> ProblemAssessmentScreen()
-                        2 -> SourcesScreen()
-                        3 -> QuizScreen()
+                        2 -> QuizScreen()
+                        3 -> SourcesScreen()
                         4 -> EmergencyScreen()
                     }
                 }
