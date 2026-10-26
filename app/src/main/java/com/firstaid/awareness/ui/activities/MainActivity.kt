@@ -19,7 +19,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -78,13 +80,20 @@ class MainActivity : ComponentActivity() {
                 BottomNavItem("Emergency", emergency_icon)
             )
 
+            val isEmergencySelected = selectedItem == 3
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
                     Toolbar(scrollBehavior)
                 },
                 bottomBar = {
-                    NavigationBar {
+                    NavigationBar(
+                        containerColor = if (isEmergencySelected) {
+                            MaterialTheme.colorScheme.errorContainer
+                        } else {
+                            NavigationBarDefaults.containerColor
+                        }
+                    ) {
                         items.forEachIndexed { index, item ->
                             NavigationBarItem(
                                 selected = selectedItem == index,
@@ -99,7 +108,12 @@ class MainActivity : ComponentActivity() {
                                 },
                                 label = {
                                     Text(item.title)
-                                }
+                                },
+                                colors = NavigationBarItemDefaults.colors(
+                                    selectedIconColor = if (isEmergencySelected) MaterialTheme.colorScheme.onError else MaterialTheme.colorScheme.onSurface,
+                                    selectedTextColor = if (isEmergencySelected) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSurface,
+                                    indicatorColor = if (isEmergencySelected) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.secondaryContainer
+                                )
                             )
                         }
                     }
@@ -120,6 +134,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 
     data class BottomNavItem(
         val title: String,
