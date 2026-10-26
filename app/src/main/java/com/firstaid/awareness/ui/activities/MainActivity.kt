@@ -1,17 +1,23 @@
 package com.firstaid.awareness.ui.activities
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -28,6 +34,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import com.firstaid.awareness.ui.emergency.EmergencyScreen
 import com.firstaid.awareness.ui.icons.arrow_back
 import com.firstaid.awareness.ui.icons.educate_icon
@@ -47,7 +55,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            getWindow().setNavigationBarContrastEnforced(false);
+            window.setNavigationBarContrastEnforced(false)
         }
         setContent {
             Screen()
@@ -133,6 +141,25 @@ class MainActivity : ComponentActivity() {
                         imageVector = arrow_back,
                         contentDescription = "Back"
                     )
+                }
+            },
+            actions = {
+                Button(
+                    onClick = {
+                        val phoneNumber = "tel:112"
+                        val dialIntent = Intent(Intent.ACTION_DIAL).apply {
+                            data = phoneNumber.toUri()
+                        }
+                        startActivity(dialIntent)
+                    },
+                    colors = ButtonDefaults.filledTonalButtonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    ),
+                ) {
+                    Icon(emergency_icon, contentDescription = "Emergency")
+                    Spacer(Modifier.width(8.dp))
+                    Text("Emergency")
                 }
             },
             scrollBehavior = scrollBehavior
