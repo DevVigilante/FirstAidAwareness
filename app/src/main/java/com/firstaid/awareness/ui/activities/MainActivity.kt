@@ -1,5 +1,6 @@
 package com.firstaid.awareness.ui.activities
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,6 +45,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            getWindow().setNavigationBarContrastEnforced(false);
+        }
         setContent {
             Screen()
         }
@@ -53,7 +58,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     @Preview(showSystemUi = true)
     fun Screen() {
-        AppTheme {
+        AppTheme(dynamicColor = true) {
             val scrollBehavior =
                 TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
             var selectedItem by remember { mutableIntStateOf(0) }
