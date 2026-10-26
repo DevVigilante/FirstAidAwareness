@@ -46,6 +46,7 @@ import com.firstaid.awareness.ui.icons.quiz_icon
 import com.firstaid.awareness.ui.icons.sources_icon
 import com.firstaid.awareness.ui.learn.LearnScreen
 import com.firstaid.awareness.ui.problem.ProblemAssessmentScreen
+import com.firstaid.awareness.ui.quiz.QuizScreen
 import com.firstaid.awareness.ui.sources.SourcesScreen
 import com.firstaid.awareness.ui.theme.AppTheme
 
@@ -75,12 +76,13 @@ class MainActivity : ComponentActivity() {
 
             val items = listOf(
                 BottomNavItem("Learn", educate_icon),
-                BottomNavItem("Known problem", quiz_icon),
+                BottomNavItem("Problem", quiz_icon),
                 BottomNavItem("Sources", sources_icon),
+                BottomNavItem("Quiz", quiz_icon),
                 BottomNavItem("Emergency", emergency_icon)
             )
 
-            val isEmergencySelected = selectedItem == 3
+            val isEmergencySelected = selectedItem == 4
             Scaffold(
                 modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
                 topBar = {
@@ -128,13 +130,13 @@ class MainActivity : ComponentActivity() {
                         0 -> LearnScreen()
                         1 -> ProblemAssessmentScreen()
                         2 -> SourcesScreen()
-                        3 -> EmergencyScreen()
+                        3 -> QuizScreen()
+                        4 -> EmergencyScreen()
                     }
                 }
             }
         }
     }
-
 
     data class BottomNavItem(
         val title: String,
