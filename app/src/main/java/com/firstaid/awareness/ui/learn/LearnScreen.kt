@@ -11,13 +11,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.firstaid.awareness.ui.kit.FirstAidKitScreen
 
 @Composable
 @Preview(showSystemUi = true)
 fun LearnScreen() {
     var selectedTopic by remember { mutableStateOf<FirstAidTopic?>(null) }
+    var showFirstAidKit by remember { mutableStateOf(false) }
 
-    if (selectedTopic != null) {
+    if (showFirstAidKit) {
+        FirstAidKitScreen(onBackClick = { showFirstAidKit = false })
+    } else if (selectedTopic != null) {
         LearnTopicDetailScreen(
             topic = selectedTopic!!,
             onBackClick = { selectedTopic = null }
@@ -31,6 +35,7 @@ fun LearnScreen() {
                 .padding(bottom = 24.dp)
         ) {
             LearnHeaderCard()
+            LearnKitBannerCard(onClick = { showFirstAidKit = true })
             LearnTopicsList(onTopicClick = { topic ->
                 selectedTopic = topic
             })
